@@ -1,6 +1,7 @@
 package Frontend;
 
 import CircusOfPlatesGame.EasyGameWorld;
+import CircusOfPlatesGame.GameWorld;
 import CircusOfPlatesGame.HardGameWorld;
 import CircusOfPlatesGame.MediumGameWorld;
 import eg.edu.alexu.csd.oop.game.GameEngine;
@@ -9,6 +10,8 @@ import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 
 public class MainMenu extends javax.swing.JFrame {
+
+    GameWorld gameWorld;
 
     public MainMenu() {
         initComponents();
@@ -95,21 +98,24 @@ public class MainMenu extends javax.swing.JFrame {
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
         this.setVisible(false);
-        final GameEngine.GameController gameController = GameEngine.start("Circus of Plates", new EasyGameWorld(800, 600));
+        gameWorld = new EasyGameWorld(800, 600);
+        final GameEngine.GameController gameController = GameEngine.start("Circus of Plates", gameWorld);
 
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         // TODO add your handling code here:
         this.setVisible(false);
-        final GameEngine.GameController gameController = GameEngine.start("Circus of Plates", new MediumGameWorld(800, 600));
+        gameWorld = new MediumGameWorld(800, 600);
+        final GameEngine.GameController gameController = GameEngine.start("Circus of Plates", gameWorld);
 
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
         // TODO add your handling code here:
         this.setVisible(false);
-        final GameEngine.GameController gameController = GameEngine.start("Circus of Plates", new HardGameWorld(800, 600));
+        gameWorld = new HardGameWorld(800, 600);
+        final GameEngine.GameController gameController = GameEngine.start("Circus of Plates", gameWorld);
     }//GEN-LAST:event_jButton3ActionPerformed
 
     /**
