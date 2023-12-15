@@ -1,34 +1,23 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
- */
 package Frontend;
 
-import CircusOfPlatesGame.GameWorld;
+import CircusOfPlatesGame.EasyGameWorld;
+import CircusOfPlatesGame.HardGameWorld;
+import CircusOfPlatesGame.MediumGameWorld;
 import eg.edu.alexu.csd.oop.game.GameEngine;
-import java.awt.Color;
 import java.awt.Dimension;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 
-
-/**
- *
- * @author nourayman
- */
 public class MainMenu extends javax.swing.JFrame {
 
-      
     public MainMenu() {
         initComponents();
         JLabel label = new JLabel();
-        
         label.setIcon(new ImageIcon(getClass().getResource("../Images/bgclown.png")));
-        Dimension size=label.getPreferredSize();
-        label.setBounds(250, 2, size.width,size.height);
+        Dimension size = label.getPreferredSize();
+        label.setBounds(250, 2, size.width, size.height);
         this.add(label);
-       
-     }
+    }
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -106,21 +95,21 @@ public class MainMenu extends javax.swing.JFrame {
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
         this.setVisible(false);
-        final GameEngine.GameController gamecontroller = GameEngine.start("Circus of Plates",new GameWorld(800,600,0));
+        final GameEngine.GameController gameController = GameEngine.start("Circus of Plates", new EasyGameWorld(800, 600));
 
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         // TODO add your handling code here:
         this.setVisible(false);
-        final GameEngine.GameController gamecontroller = GameEngine.start("Circus of Plates",new GameWorld(800,600,1));
-    
+        final GameEngine.GameController gameController = GameEngine.start("Circus of Plates", new MediumGameWorld(800, 600));
+
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
         // TODO add your handling code here:
         this.setVisible(false);
-        final GameEngine.GameController gamecontroller = GameEngine.start("Circus of Plates",new GameWorld(800,600,2));
+        final GameEngine.GameController gameController = GameEngine.start("Circus of Plates", new HardGameWorld(800, 600));
     }//GEN-LAST:event_jButton3ActionPerformed
 
     /**
