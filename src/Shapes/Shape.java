@@ -1,5 +1,7 @@
 package Shapes;
 
+import eg.edu.alexu.csd.oop.game.GameObject;
+import java.awt.image.BufferedImage;
 
 public abstract class Shape extends ImageObject{
     Color color;

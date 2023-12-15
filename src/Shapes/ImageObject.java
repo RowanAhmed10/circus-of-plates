@@ -20,8 +20,7 @@ public class ImageObject implements GameObject{
 	
 	
 	public ImageObject(int posX, int posY, String path){
-
-        this(posX, posY, path, 0);
+		this(posX, posY, path, 0);
 	}
 	
 	public ImageObject(int posX, int posY, String path, int type){
@@ -32,8 +31,7 @@ public class ImageObject implements GameObject{
 		// create a bunch of buffered images and place into an array, to be displayed sequentially
 		try {
 			spriteImages[0] = ImageIO.read(getClass().getResourceAsStream(path));
-
-        } catch (IOException e) {
+		} catch (IOException e) {
 			e.printStackTrace();
 		}
 	}

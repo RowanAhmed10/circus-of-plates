@@ -2,5 +2,9 @@ package Shapes;
 
 public enum ShapeName {
     PLATE,
-    BALl;
+    BALL,
+    BOMB,
+    ICE,
+    HEART,
+    STAR
 }

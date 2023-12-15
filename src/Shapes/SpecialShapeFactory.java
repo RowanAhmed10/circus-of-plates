@@ -1,15 +1,14 @@
 package Shapes;
 
-public class SpecialShapeFactory {
+public class SpecialShapeFactory extends Factory{
 
-    public static SpecialShape SpecialPieceCreator(SpecialShapeName specialShapeName, int xPos, int yPos) {
+    public SpecialShape SpecialShapeCreator(SpecialShapeName specialShapeName, int xPos, int yPos) {
         switch (specialShapeName) {
             case BOMB:
-                return new Bomb(xPos, yPos, "../Images/bomb.png");
+                return new Bomb(xPos, yPos, "Images//bomb.png");
             case ICE:
-                return new IceCube(xPos, yPos, "../Images/ice.png");
-            case HEART:
-                    return new IceCube(xPos, yPos, "../Images/heart.png");
+                return new IceCube(xPos, yPos, "Images//ice.png");
+           
             default:
                 return null;
         }
