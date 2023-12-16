@@ -30,6 +30,7 @@ public class HardGameWorld extends GameWorld {
 
     @Override
     public void setGame() {
+        SoundPlayer.playSound("circusMusic.WAV");
         createShapes();
         constants.add(background);
         controllable.add(ClownObject.getClownInstance());

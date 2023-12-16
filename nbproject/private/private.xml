@@ -3,8 +3,22 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/Users/nadamourad/Downloads/JavaApplication19/src/Frontend/MainMenu.java</file>
-            <file>file:/Users/nadamourad/Downloads/JavaApplication19/src/CircusOfPlatesGame/GameWorld.java</file>
+            <file>file:/C:/Users/Win11/Desktop/circus-of-plates/src/Shapes/SpecialShape.java</file>
+            <file>file:/C:/Users/Win11/Desktop/circus-of-plates/src/Shapes/BasePlate.java</file>
+            <file>file:/C:/Users/Win11/Desktop/circus-of-plates/src/Shapes/IceCube.java</file>
+            <file>file:/C:/Users/Win11/Desktop/circus-of-plates/src/Shapes/Plate.java</file>
+            <file>file:/C:/Users/Win11/Desktop/circus-of-plates/src/Shapes/ImageObject.java</file>
+            <file>file:/C:/Users/Win11/Desktop/circus-of-plates/src/Frontend/MainMenu.java</file>
+            <file>file:/C:/Users/Win11/Desktop/circus-of-plates/src/CircusOfPlatesGame/ClownObject.java</file>
+            <file>file:/C:/Users/Win11/Desktop/circus-of-plates/src/Shapes/SpecialShapeName.java</file>
+            <file>file:/C:/Users/Win11/Desktop/circus-of-plates/src/CircusOfPlatesGame/EasyGameWorld.java</file>
+            <file>file:/C:/Users/Win11/Desktop/circus-of-plates/src/Shapes/Constants.java</file>
+            <file>file:/C:/Users/Win11/Desktop/circus-of-plates/src/Shapes/Star.java</file>
+            <file>file:/C:/Users/Win11/Desktop/circus-of-plates/src/CircusOfPlatesGame/MediumGameWorld.java</file>
+            <file>file:/C:/Users/Win11/Desktop/circus-of-plates/src/CircusOfPlatesGame/SoundPlayer.java</file>
+            <file>file:/C:/Users/Win11/Desktop/circus-of-plates/src/CircusOfPlatesGame/GameWorld.java</file>
+            <file>file:/C:/Users/Win11/Desktop/circus-of-plates/src/Shapes/Shape.java</file>
+            <file>file:/C:/Users/Win11/Desktop/circus-of-plates/src/CircusOfPlatesGame/HardGameWorld.java</file>
         </group>
     </open-files>
 </project-private>

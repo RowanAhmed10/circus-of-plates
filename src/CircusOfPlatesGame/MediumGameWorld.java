@@ -14,6 +14,7 @@ public class MediumGameWorld extends GameWorld {
 
     @Override
     public void setGame() {
+        SoundPlayer.playSound("circusMusic.WAV");
         createShapes();
         constants.add(background);
         constants.add(new LivesFactory().LivesCreator(5, 10));
