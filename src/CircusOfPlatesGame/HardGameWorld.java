@@ -43,5 +43,7 @@ public class HardGameWorld extends GameWorld {
             moveable.add(specialShape2);
         }
         Collections.shuffle(moveable);
+        startState = new StartClownState(this);
+        stopState = new StopClownState(this);
     }
 }

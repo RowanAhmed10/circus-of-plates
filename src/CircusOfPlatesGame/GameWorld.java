@@ -16,7 +16,7 @@ public abstract class GameWorld implements World {
     private int score = 0, scoreShift = 10;
     private int width;
     private int height;
-    private int CONTROL_SPEED = 10;
+    private int CONTROL_SPEED = 20;
     private int SPEED = 10;
     private int MAX_MOVING_OBJECTS = 3;
     private ShapeColorCollection shapeNamesCollection;
@@ -25,6 +25,8 @@ public abstract class GameWorld implements World {
     protected List<GameObject> moveable = new ArrayList();
     ImageObject background = new ImageObject(0, 0, "../Images/background.png");
     SpecialShapeFactory special = new SpecialShapeFactory();
+    StopClownState stopState;
+    StartClownState startState;
 
     public GameWorld(int width, int height) {
         this.shapeNamesCollection = new ShapeColorCollection();
@@ -86,7 +88,10 @@ public abstract class GameWorld implements World {
             if (obj.getY() == getHeight()) {
                 returnToTop(obj);
             }
+
         }
+        startState.freeze();//lesa hn3ml conditions to call freeze
+        //stopState.freeze();
         return true;
     }
 
