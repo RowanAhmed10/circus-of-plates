@@ -1,32 +1,27 @@
 package Shapes;
 
-import CircusOfPlatesGame.ClownObject;
 import CircusOfPlatesGame.GameWorld;
 
 public abstract class Shape extends ImageObject {
 
     Color color;
     private GameWorld world;
-    boolean isControllable =false;
+    boolean isControllable = false;
 
     public Color getColor() {
         return color;
     }
 
-    public Shape(int posX, int posY, String path, Color color,GameWorld world) {
-
-
+    public Shape(int posX, int posY, String path, Color color, GameWorld world) {
         super(posX, posY, path);
-        this.world=world;
-        this.color=color;
+        this.world = world;
+        this.color = color;
     }
 
     @Override
     public void setY(int y) {
-        if(!isControllable) {
+        if (!isControllable) {
             super.setY(y);
         }
     }
-
 }
-

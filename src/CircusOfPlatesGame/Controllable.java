@@ -12,7 +12,4 @@ public class Controllable extends ImageObject {
     public void setY(int y) {
 
     }
-
-
-
 }

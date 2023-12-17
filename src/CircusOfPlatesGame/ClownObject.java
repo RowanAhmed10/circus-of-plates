@@ -24,10 +24,6 @@ public final class ClownObject extends ImageObject {
 
     }
 
-
-
 // Clown moves horizontally only
     // gonna set x  in the controller
-
-
 }

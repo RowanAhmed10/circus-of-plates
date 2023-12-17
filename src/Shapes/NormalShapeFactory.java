@@ -4,14 +4,12 @@ import CircusOfPlatesGame.GameWorld;
 
 public class NormalShapeFactory extends Factory {
 
-
-    public ImageObject ShapeCreator(ShapeName shapeName, Color color, int xPos, int yPos,GameWorld world) {
-
+    public ImageObject ShapeCreator(ShapeName shapeName, Color color, int xPos, int yPos, GameWorld world) {
         switch (shapeName) {
             case PLATE:
-                return new Plate(xPos, yPos, getImagePath(color, shapeName), color,world);
+                return new Plate(xPos, yPos, getImagePath(color, shapeName), color, world);
             case BALL:
-                return new Ball(xPos, yPos, getImagePath(color, shapeName), color,world);
+                return new Ball(xPos, yPos, getImagePath(color, shapeName), color, world);
             default:
                 return null;
         }
