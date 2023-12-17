@@ -53,21 +53,23 @@ public abstract class GameWorld implements World {
         return areTwoObjectsIntersected(left.get(left.size() - 1), shape);
     }
 
-    private void updateHand(List<Shape> list, Shape shape) {
+    private void updateHand(List<Shape> list, GameObject shape) {
         GameObject top = list.get(list.size() - 1);
-        list.add(shape);
+
 
         if (shape instanceof Plate) {
-            plateIndexUpdate(top, shape);
+            list.add((Shape)shape);
+            plateIndexUpdate(top, (ImageObject)shape);
         }
-        if (shape instanceof Ball) {
-            ballIndexUpdate(top, shape);
+       else if (shape instanceof Ball) {
+            list.add((Shape)shape);
+            ballIndexUpdate(top,(ImageObject) shape);
         }
-//if(shape instanceof Bomb|| shape instanceof IceCube)
-//{
-//    specialShapesChecker(shape);
-//   return;
-//}
+       else if(shape instanceof Bomb|| shape instanceof IceCube)
+{
+    specialShapesChecker(shape);
+   return;
+}
         controllable.add(shape);
         moveable.remove(shape);
     }
@@ -77,7 +79,15 @@ public abstract class GameWorld implements World {
             //add bomb actions "decrease lives"
 
             SoundPlayer.playSound("bombsound.WAV");
+          ((Bomb) shape).setVisible(false);
             moveable.remove(shape);
+            System.out.println(constants.size());
+            if(constants.size()>1) {
+
+                ImageObject heart = (ImageObject) constants.get(constants.size() - 1);
+                heart.setVisible(false);
+                constants.remove(constants.size() - 1);
+            }
 
         }
         if (shape instanceof IceCube) {
@@ -173,12 +183,16 @@ public abstract class GameWorld implements World {
             }
 
             if (plateCaughtByLeftHand(obj)) {
-                updateHand(left, (Shape) obj);
-                addScore();
+
+                    updateHand(left, obj);
+                    addScore();
+
             }
             if (plateCaughtByRightHand(obj)) {
-                updateHand(right, (Shape) obj);
-                addScore();
+
+                    updateHand(right, (obj));
+                    addScore();
+
             }
 
         }
