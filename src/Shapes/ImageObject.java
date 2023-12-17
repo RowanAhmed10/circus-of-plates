@@ -12,6 +12,7 @@ public class ImageObject implements GameObject {
     private BufferedImage[] spriteImages = new BufferedImage[MAX_MSTATE];
     private int x;
     private int y;
+    private boolean isConrollable=false;
     private boolean visible;
 
     public ImageObject(int posX, int posY, String path) {
@@ -31,7 +32,16 @@ public class ImageObject implements GameObject {
         }
     }
 
+    public boolean isConrollable() {
+        return isConrollable;
+    }
+
+    public void setConrollable(boolean conrollable) {
+        isConrollable = conrollable;
+    }
+
     public void setVisible(boolean visible) {
+
         this.visible = visible;
     }
 
@@ -52,7 +62,9 @@ public class ImageObject implements GameObject {
 
     @Override
     public void setY(int y) {
-        this.y = y;
+        if(!isConrollable) {
+            this.y = y;
+        }
     }
 
     @Override

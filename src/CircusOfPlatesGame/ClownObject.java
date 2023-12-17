@@ -7,7 +7,7 @@ public final class ClownObject extends ImageObject {
 
     private static ClownObject clownInstance = new ClownObject(290, 265, "../Images/clown.png");
 
-    // Modify the Clown's x and y position 
+    // Modify the Clown's x and y position
     public static ClownObject getClownInstance() {
         if (clownInstance == null) {
             clownInstance = new ClownObject(100, 200, "../Images/clown.png.png");
@@ -23,6 +23,11 @@ public final class ClownObject extends ImageObject {
     public void setY(int y) {
 
     }
-    // Clown moves horizontally only 
+
+
+
+// Clown moves horizontally only
     // gonna set x  in the controller
+
+
 }

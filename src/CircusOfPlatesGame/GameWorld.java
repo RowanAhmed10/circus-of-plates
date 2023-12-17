@@ -1,18 +1,6 @@
 package CircusOfPlatesGame;
 
-import Shapes.Ball;
-import Shapes.BasePlate;
-import Shapes.Bomb;
-import Shapes.Color;
-import Shapes.IceCube;
-import Shapes.ImageObject;
-import Shapes.LivesFactory;
-import Shapes.NormalShapeFactory;
-import Shapes.Plate;
-import Shapes.Shape;
-import Shapes.ShapeName;
-import Shapes.SpecialShapeFactory;
-import Shapes.Star;
+import Shapes.*;
 import eg.edu.alexu.csd.oop.game.GameObject;
 import eg.edu.alexu.csd.oop.game.World;
 import java.util.ArrayList;
@@ -25,7 +13,7 @@ public abstract class GameWorld implements World {
     private int height;
     private int CONTROL_SPEED = 20;
     private int SPEED = 10;
-    private int MAX_MOVING_OBJECTS = 3;
+    private int MAX_MOVING_OBJECTS = 5;
     private ShapeColorCollection shapeNamesCollection;
     protected List<GameObject> constants = new ArrayList();
     protected List<GameObject> controllable = new ArrayList();
@@ -39,22 +27,26 @@ public abstract class GameWorld implements World {
     private GameObject RightTop;
     StopClownState stopState;
     StartClownState startState;
-    private GameObject RightBasePlate;
-    private GameObject LeftBasePlate;
-    private final int LeftPlateX = 260;
-    private final int RightPlateX = 440;
+    private ImageObject RightBasePlate=new BasePlate(260, 330, "../Images/whiteplate.png",this,false);
+    private ImageObject LeftBasePlate= new BasePlate(440, 330, "../Images/whiteplate.png",this,true);
+
+    List<Shape> right = new ArrayList();
+    List<Shape> left = new ArrayList();
 
     public GameWorld(int width, int height) {
         this.shapeNamesCollection = new ShapeColorCollection();
         this.width = width;
         this.height = height;
-        LeftBasePlate = new BasePlate(260, 330, "../Images/whiteplate.png");
-        RightBasePlate = new BasePlate(440, 330, "../Images/whiteplate.png");
+
+
         setGame();
         LeftTop = LeftBasePlate;
         RightTop = RightBasePlate;
+//        left.add(LeftBasePlate);
+//        right.add(RightBasePlate);
         controllable.add(LeftTop);
         controllable.add(RightTop);
+
     }
 
     private boolean AreTwoObjectsIntersected(GameObject object1, GameObject object2) {
@@ -68,7 +60,8 @@ public abstract class GameWorld implements World {
         return AreTwoObjectsIntersected(LeftTop, shape);
     }
 
-    private void UpdateLeftHand(GameObject shape) {
+    private void UpdateLeftHand(Shape shape) {
+        left.add(shape);
 
         if (shape instanceof Plate) {
             PlateIndexUpdate(LeftTop, shape);
@@ -76,11 +69,11 @@ public abstract class GameWorld implements World {
         if (shape instanceof Ball) {
             BallIndexUpdate(LeftTop, shape);
         }
-if(shape instanceof Bomb|| shape instanceof IceCube)
-{
-    SpecialShapesChecker(shape);
-   return;
-}
+//if(shape instanceof Bomb|| shape instanceof IceCube)
+//{
+//    SpecialShapesChecker(shape);
+//   return;
+//}
         controllable.add(shape);
         moveable.remove(shape);
         LeftTop = shape;
@@ -113,44 +106,49 @@ if (shape instanceof Star)
 
     }
 
-    private void UpdateRightHand(GameObject shape) {
+    private void UpdateRightHand(Shape shape) {
 
+        right.add(shape);
         if (shape instanceof Plate) {
             PlateIndexUpdate(RightTop, shape);
         }
         if (shape instanceof Ball) {
             BallIndexUpdate(RightTop, shape);
         }
-if(shape instanceof Bomb|| shape instanceof IceCube)
-{
-    SpecialShapesChecker(shape);
-   return;
-}
+//if(shape instanceof Bomb|| shape instanceof IceCube)
+//{
+//    SpecialShapesChecker(shape);
+//   return;
+//
+//        }
         controllable.add(shape);
         moveable.remove(shape);
         RightTop = shape;
     }
 
-    private void PlateIndexUpdate(GameObject topObject, GameObject shape) {
-        int X = topObject instanceof Plate||topObject instanceof BasePlate ? topObject.getX() : topObject.getX() - 25;
+    private void PlateIndexUpdate(GameObject topObject, ImageObject shape) {
+       int X = topObject instanceof Plate||topObject instanceof BasePlate ? topObject.getX() : topObject.getX() - 25;
         int Y = topObject instanceof Plate||topObject instanceof BasePlate ? topObject.getY() - shape.getHeight() + 25 : topObject.getY() - shape.getHeight()+10 ;
         shape.setX(X);
         shape.setY(Y);
+        shape.setConrollable(true);
+
     }
 
-    private void BallIndexUpdate(GameObject topObject, GameObject shape) {
+    private void BallIndexUpdate(GameObject topObject, ImageObject shape) {
         int X = topObject instanceof Plate||topObject instanceof BasePlate ? topObject.getX() + 25 : topObject.getX();
          int Y = topObject instanceof Plate ||topObject instanceof BasePlate? topObject.getY() - shape.getHeight() + 20: topObject.getY() - shape.getHeight() ;
         shape.setX(X);
         shape.setY(Y);
+        shape.setConrollable(true);
     }
 
     protected void createShapes() {
         for (int i = 0; i < MAX_MOVING_OBJECTS; i++) {
             for (Iterator iter = shapeNamesCollection.getIterator(); iter.hasNext();) {
                 Color shapeColor = (Color) iter.next();
-                Shape shape1 = (Shape) new NormalShapeFactory().ShapeCreator(ShapeName.PLATE, shapeColor, (int) ((Math.random()) * (getWidth())), (int) ((Math.random() + 0.5) * getHeight() / 2 * -1));
-                Shape shape2 = (Shape) new NormalShapeFactory().ShapeCreator(ShapeName.BALL, shapeColor, (int) ((Math.random()) * (getWidth())), (int) ((Math.random() + 0.5) * getHeight() / 4 * -1));
+                Shape shape1 = (Shape) new NormalShapeFactory().ShapeCreator(ShapeName.PLATE, shapeColor, (int) ((Math.random()) * (getWidth())), (int) ((Math.random()) * getHeight() / 2 * -1),this);
+                Shape shape2 = (Shape) new NormalShapeFactory().ShapeCreator(ShapeName.BALL, shapeColor, (int) ((Math.random()) * (getWidth())), (int) ((Math.random()) * getHeight() / 4 * -1),this);
                 moveable.add(shape2);
                 moveable.add(shape1);
             }
@@ -193,20 +191,27 @@ if(shape instanceof Bomb|| shape instanceof IceCube)
 
         for (GameObject obj : controllable) {
             ((ImageObject) obj).setVisible(true);
+
         }
         for (int i = 0; i < moveable.size(); i++) {
-            GameObject obj = moveable.get(i);
+
+            ImageObject obj = (ImageObject)moveable.get(i);
             obj.setY((obj.getY() + 1));
+
             if (obj.getY() == getHeight()) {
                 returnToTop(obj);
             }
 
             if (PlateCaughtByLeftHand(obj)) {
-                UpdateLeftHand(obj);
+                UpdateLeftHand((Shape) obj);
+               addScore();
             }
             if (PlateCaughtByRightHand(obj)) {
-                UpdateRightHand(obj);
+                UpdateRightHand((Shape) obj);
+                addScore();
             }
+
+
 
         }
         //startState.freeze();//lesa hn3ml conditions to call freeze
@@ -215,29 +220,33 @@ if(shape instanceof Bomb|| shape instanceof IceCube)
     }
 
     public void addScore() {
-        List<Shape> right = new ArrayList();
-        List<Shape> left = new ArrayList();
+        List<Shape> rightS = new ArrayList();
+        List<Shape> leftS = new ArrayList();
         for (int i = constants.size() - 1; i >= 0; i--) {
             GameObject object = constants.get(i);
             if (!(object instanceof Shape)) {
                 continue;
             }
-            if (object.getX() > controllable.get(0).getX()) {
+            if (object.getX() > constants.get(0).getX()) {
                 right.add((Shape) object);
             } else {
                 left.add((Shape) object);
             }
         }
-        addScore(left);
-        addScore(right);
+        addScore(leftS);
+        addScore(rightS);
     }
 
     public void addScore(List<Shape> list) {
         if (canAddScore(list)) {
             score += scoreShift;
-            for (int i = 0; i < 3; i++) {
-                constants.remove(list.get(list.size() - 1));
+            for (int i = 1; i < 3; i++) {
+//              ImageObject shape= (ImageObject) list.get(list.size()-i);
+//              shape.setVisible(false);
+//              list.remove(list.get(list.size()-i));
+        controllable.remove(list.get(list.size()-i));
             }
+
         }
     }
 
@@ -268,6 +277,24 @@ if(shape instanceof Bomb|| shape instanceof IceCube)
 
     public void returnToTop(GameObject obj) {
         obj.setY(-1 * (int) (Math.random() * getHeight()) / 2);
-        obj.setX((int) (Math.random() * getWidth()));
+        obj.setX((int)(Math.random() * getWidth()));
     }
+
+
+
+    public boolean isInLeftStack(Shape shape){
+        for(int i=0;i<left.size();i++){
+           if(left.get(i)==shape)
+               return true;
+        }
+        return false;
+    }
+    public boolean isInRightStack(Shape shape){
+        for(int i=0;i<right.size();i++){
+            if(right.get(i)==shape)
+                return true;
+        }
+        return false;
+    }
+
 }
