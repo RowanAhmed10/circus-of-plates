@@ -5,28 +5,15 @@ import Shapes.SpecialShape;
 import Shapes.SpecialShapeFactory;
 import Shapes.SpecialShapeName;
 import java.util.Collections;
-import java.util.Timer;
-import java.util.TimerTask;
+
 
 public class HardGameWorld extends GameWorld {
 
-    int delayInSeconds = 5;
-    boolean isFreezed = false;
 
     public HardGameWorld(int width, int height) {
         super(width, height);
     }
 
-    private void freeze() {
-        isFreezed = true;
-        Timer timer = new Timer();
-        timer.schedule(new TimerTask() {
-            @Override
-            public void run() {
-                isFreezed = false;
-            }
-        }, delayInSeconds * 1000);
-    }
 
     @Override
     public void setGame() {

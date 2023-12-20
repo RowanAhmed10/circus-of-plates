@@ -2,7 +2,7 @@ package CircusOfPlatesGame;
 
 public class EasyGameWorld extends GameWorld {
 
-    public EasyGameWorld(int width, int height) {
+    public EasyGameWorld(int width, int height)  {
         super(width, height);
     }
 

@@ -1,6 +1,9 @@
 package CircusOfPlatesGame;
 
 import Shapes.ImageObject;
+import Shapes.Shape;
+import java.util.Timer;
+import java.util.TimerTask;
 
 public class StartClownState extends ClownState {
 
@@ -21,7 +24,17 @@ public class StartClownState extends ClownState {
 
     @Override
     public void freeze() {
-        hardGame.controllable.remove(ClownObject.getClownInstance());
         hardGame.constants.add(ClownObject.getClownInstance());
+        hardGame.controllable.remove(ClownObject.getClownInstance());
+        hardGame.constants.add(hardGame.getLeftBasePlate());
+        hardGame.controllable.remove(hardGame.getLeftBasePlate());
+        hardGame.constants.add(hardGame.getRightBasePlate());
+        hardGame.controllable.remove(hardGame.getRightBasePlate());
+        hardGame.constants.addAll(hardGame.right);
+        hardGame.constants.addAll(hardGame.left);
+        hardGame.controllable.removeAll(hardGame.right);
+        hardGame.controllable.removeAll(hardGame.left);
+
     }
+
 }

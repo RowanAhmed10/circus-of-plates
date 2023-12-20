@@ -5,12 +5,12 @@ import Shapes.ImageObject;
 //3adlt 3leh ya ranim 
 public final class ClownObject extends ImageObject {
 
-    private static ClownObject clownInstance = new ClownObject(290, 265, "../Images/clown.png");
+    private static ClownObject clownInstance = null;
 
     // Modify the Clown's x and y position
     public static ClownObject getClownInstance() {
         if (clownInstance == null) {
-            clownInstance = new ClownObject(100, 200, "../Images/clown.png.png");
+            clownInstance = new ClownObject(290, 265, "../Images/clown.png");
         }
         return clownInstance;
     }

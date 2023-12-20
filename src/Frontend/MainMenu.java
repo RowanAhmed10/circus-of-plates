@@ -5,23 +5,78 @@ import CircusOfPlatesGame.GameWorld;
 import CircusOfPlatesGame.HardGameWorld;
 import CircusOfPlatesGame.MediumGameWorld;
 import eg.edu.alexu.csd.oop.game.GameEngine;
+import eg.edu.alexu.csd.oop.game.GameEngine.GameController;
 import java.awt.Dimension;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.util.Timer;
+import java.util.TimerTask;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
+import javax.swing.JMenu;
+import javax.swing.JMenuBar;
+import javax.swing.JMenuItem;
 
 public class MainMenu extends javax.swing.JFrame {
 
     GameWorld gameWorld;
+    JMenuBar menuBar = new JMenuBar();
+    JMenu menu = new JMenu("Options");
+    JMenuItem resume = new JMenuItem("resume");
+    public JMenuItem pause = new JMenuItem("pause");
+    private int tasks=0;
 
     public MainMenu() {
+        
         initComponents();
         JLabel label = new JLabel();
         label.setIcon(new ImageIcon(getClass().getResource("../Images/bgclown.png")));
         Dimension size = label.getPreferredSize();
         label.setBounds(250, 2, size.width, size.height);
         this.add(label);
+        this.setLocationRelativeTo(null);
     }
 
+    public void startGame(){
+           
+        menu.add(pause);
+        menu.add(resume);
+        menuBar.add(menu);
+        gameWorld.setMenu(this);
+        final GameEngine.GameController gameController = GameEngine.start("Circus of Plates", gameWorld, menuBar);
+
+        pause.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                gameController.pause();
+                gameWorld.getCountDown().pauseTime();
+                gameWorld.getEndGame().cancel();
+
+            }
+        });
+        resume.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                gameController.resume();
+                gameWorld.getCountDown().resumeTime();
+               Timer t = new Timer();
+               TimerTask task = new TimerTask() {
+                    @Override
+                    public void run() {
+                       if(tasks==1){
+                        gameWorld.endGame();}
+                       else tasks--;
+
+                    }
+                };
+               System.out.println(gameWorld.getCountDown().getSeconds());
+               t.schedule(task, (gameWorld.getCountDown().secondsPaused())*1000 + (gameWorld.getCountDown().getSeconds()* 1000));
+               tasks++;
+            }
+        });
+        
+  
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -40,6 +95,8 @@ public class MainMenu extends javax.swing.JFrame {
         jButton1.setBackground(new java.awt.Color(255, 102, 102));
         jButton1.setFont(new java.awt.Font("Silom", 0, 18)); // NOI18N
         jButton1.setText("EASY");
+        jButton1.setBorder(null);
+        jButton1.setOpaque(true);
         jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton1ActionPerformed(evt);
@@ -49,7 +106,7 @@ public class MainMenu extends javax.swing.JFrame {
         jButton2.setBackground(new java.awt.Color(255, 0, 0));
         jButton2.setFont(new java.awt.Font("Silom", 0, 18)); // NOI18N
         jButton2.setText("MEDIUM");
-        jButton2.setBorderPainted(false);
+        jButton2.setBorder(null);
         jButton2.setOpaque(true);
         jButton2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -60,7 +117,7 @@ public class MainMenu extends javax.swing.JFrame {
         jButton3.setBackground(new java.awt.Color(153, 0, 0));
         jButton3.setFont(new java.awt.Font("Silom", 0, 18)); // NOI18N
         jButton3.setText("HARD");
-        jButton3.setBorderPainted(false);
+        jButton3.setBorder(null);
         jButton3.setOpaque(true);
         jButton3.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -99,53 +156,28 @@ public class MainMenu extends javax.swing.JFrame {
         // TODO add your handling code here:
         this.setVisible(false);
         gameWorld = new EasyGameWorld(800, 600);
-        final GameEngine.GameController gameController = GameEngine.start("Circus of Plates", gameWorld);
-
+        startGame();
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         // TODO add your handling code here:
         this.setVisible(false);
         gameWorld = new MediumGameWorld(800, 600);
-        final GameEngine.GameController gameController = GameEngine.start("Circus of Plates", gameWorld);
-
+        startGame();
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
         // TODO add your handling code here:
         this.setVisible(false);
         gameWorld = new HardGameWorld(800, 600);
-        final GameEngine.GameController gameController = GameEngine.start("Circus of Plates", gameWorld);
+        startGame();
     }//GEN-LAST:event_jButton3ActionPerformed
 
     /**
      * @param args the command line arguments
      */
     public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(MainMenu.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(MainMenu.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(MainMenu.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(MainMenu.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
 
-        /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
                 new MainMenu().setVisible(true);

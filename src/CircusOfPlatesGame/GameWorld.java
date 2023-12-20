@@ -1,10 +1,16 @@
 package CircusOfPlatesGame;
 
+import Frontend.GameOver;
+import Frontend.MainMenu;
 import Shapes.*;
 import eg.edu.alexu.csd.oop.game.GameObject;
 import eg.edu.alexu.csd.oop.game.World;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Timer;
+import java.util.TimerTask;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public abstract class GameWorld implements World {
 
@@ -19,14 +25,27 @@ public abstract class GameWorld implements World {
     protected List<GameObject> constants = new ArrayList();
     protected List<GameObject> controllable = new ArrayList();
     protected List<GameObject> moveable = new ArrayList();
-    ImageObject background = new ImageObject(0, 0, "../Images/background.png");
+    protected ImageObject background = new ImageObject(0, 0, "../Images/background.png");
     private SpecialShapeFactory special = new SpecialShapeFactory();
     private NormalShapeFactory normal = new NormalShapeFactory();
     private LivesFactory live = new LivesFactory();
-    StopClownState stopState;
-    StartClownState startState;
+    protected StopClownState stopState;
+    protected StartClownState startState;
     private final Shape rightBasePlate = new BasePlate(260, 330, "../Images/whiteplate.png", this, false);
     private final Shape leftBasePlate = new BasePlate(440, 330, "../Images/whiteplate.png", this, true);
+    private GameOver gameOver = new GameOver();
+    private MainMenu menu;
+    private CountDownTimer countDown = new CountDownTimer();
+    private boolean isFrozen=false;
+    
+    
+    private Timer timer = new Timer();
+    private TimerTask endGame = new TimerTask() {
+        @Override
+        public void run() {
+          endGame();
+      }};
+    
 
     List<Shape> right = new ArrayList();
     List<Shape> left = new ArrayList();
@@ -35,14 +54,45 @@ public abstract class GameWorld implements World {
         this.shapeNamesCollection = new ShapeColorCollection();
         this.width = width;
         this.height = height;
-
         setGame();
         left.add(leftBasePlate);
         right.add(rightBasePlate);
         controllable.add(leftBasePlate);
         controllable.add(rightBasePlate);
+        timer.schedule(endGame, 60000);
+        try {
+            countDown.secondsPassed();
+        } catch (InterruptedException ex) {
+            Logger.getLogger(GameWorld.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
+    public Shape getRightBasePlate() {
+        return rightBasePlate;
+    }
+
+    public Shape getLeftBasePlate() {
+        return leftBasePlate;
+    }
+
+
+    public CountDownTimer getCountDown() {
+        return countDown;
+    }
+
+    public TimerTask getEndGame() {
+        return endGame;
+    }
+
+    public Timer getTimer() {
+        return timer;
+    }
+
+    public void setMenu(MainMenu menu) {
+        this.menu = menu;
+    }
+
+    
     private boolean areTwoObjectsIntersected(GameObject object1, GameObject object2) {
         return (Math.abs((object1.getX() + object1.getWidth() / 2) - (object2.getX() + object2.getWidth() / 2)) <= object1.getWidth())
                 && (Math.abs((object1.getY() + object1.getHeight() / 2) - (object2.getY() + object2.getHeight() / 2)) <= object1.getHeight());
@@ -60,17 +110,31 @@ public abstract class GameWorld implements World {
         if (shape instanceof Plate) {
             list.add((Shape)shape);
             plateIndexUpdate(top, (ImageObject)shape);
+            if(shape.getY()==0){
+                endGame();
+            }
         }
        else if (shape instanceof Ball) {
             list.add((Shape)shape);
             ballIndexUpdate(top,(ImageObject) shape);
+             if(shape.getY()==0){
+                endGame();
+            }
         }
        else if(shape instanceof Bomb|| shape instanceof IceCube)
 {
     specialShapesChecker(shape);
    return;
 }
-        controllable.add(shape);
+        if(isFrozen==true){
+            if(plateCaughtByRightHand(shape)){
+                right.add((Shape) shape);
+            }
+         constants.add(shape);
+          
+        }
+        else
+        {controllable.add(shape);}
         moveable.remove(shape);
     }
 
@@ -79,21 +143,36 @@ public abstract class GameWorld implements World {
             //add bomb actions "decrease lives"
 
             SoundPlayer.playSound("bombsound.WAV");
-          ((Bomb) shape).setVisible(false);
+           ((Bomb) shape).setVisible(false);
             moveable.remove(shape);
             System.out.println(constants.size());
-            if(constants.size()>1) {
+            if(constants.size()>2) {
 
                 ImageObject heart = (ImageObject) constants.get(constants.size() - 1);
                 heart.setVisible(false);
                 constants.remove(constants.size() - 1);
             }
-
-        }
+            else{
+                   endGame(); 
+               }}
         if (shape instanceof IceCube) {
             //add ice cube actions
-            moveable.remove(shape);
-        }
+              isFrozen = true;
+              startState.freeze();
+              Timer t=new Timer(); 
+              TimerTask task = new TimerTask(){
+                  @Override
+                  public void run() {
+                      isFrozen=false;
+                     stopState.freeze();
+                     
+                  }};
+                      t.schedule(task,5000);
+            
+                  moveable.remove(shape);
+          }
+        
+        
         if (shape instanceof Star) {
             //double the current score 
             SoundPlayer.playSound("starsound.WAV");
@@ -134,6 +213,11 @@ public abstract class GameWorld implements World {
             }
         }
     }
+    
+    public void endGame(){
+         menu.pause.doClick();
+         gameOver.setVisible(true);
+    }
 
     public abstract void setGame();
 
@@ -164,6 +248,7 @@ public abstract class GameWorld implements World {
 
     @Override
     public boolean refresh() {
+        
 
         for (GameObject obj : constants) {
             ((ImageObject) obj).setVisible(true);
@@ -195,9 +280,8 @@ public abstract class GameWorld implements World {
 
             }
 
-        }
-        //startState.freeze();//lesa hn3ml conditions to call freeze
-        //stopState.freeze();
+        }gameOver.setScore(this.score);
+       
         return true;
     }
 
@@ -228,9 +312,13 @@ public abstract class GameWorld implements World {
         return color1 == color2 && color1 == color3;
     }
 
+
     @Override
     public String getStatus() {
-        return "Score: " + score;
+        
+        
+        return "Score: " + score+"  Time: " + countDown.getTime()+"s";
+        
     }
 
     @Override
