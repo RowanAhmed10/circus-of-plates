@@ -2,7 +2,6 @@ package CircusOfPlatesGame;
 
 import Shapes.ImageObject;
 
-//3adlt 3leh ya ranim 
 public final class ClownObject extends ImageObject {
 
     private static ClownObject clownInstance = null;
@@ -24,6 +23,6 @@ public final class ClownObject extends ImageObject {
 
     }
 
-// Clown moves horizontally only
+    // Clown moves horizontally only
     // gonna set x  in the controller
 }

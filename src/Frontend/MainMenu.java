@@ -5,7 +5,6 @@ import CircusOfPlatesGame.GameWorld;
 import CircusOfPlatesGame.HardGameWorld;
 import CircusOfPlatesGame.MediumGameWorld;
 import eg.edu.alexu.csd.oop.game.GameEngine;
-import eg.edu.alexu.csd.oop.game.GameEngine.GameController;
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -24,10 +23,10 @@ public class MainMenu extends javax.swing.JFrame {
     JMenu menu = new JMenu("Options");
     JMenuItem resume = new JMenuItem("resume");
     public JMenuItem pause = new JMenuItem("pause");
-    private int tasks=0;
+    private int tasks = 0;
 
     public MainMenu() {
-        
+
         initComponents();
         JLabel label = new JLabel();
         label.setIcon(new ImageIcon(getClass().getResource("../Images/bgclown.png")));
@@ -37,8 +36,8 @@ public class MainMenu extends javax.swing.JFrame {
         this.setLocationRelativeTo(null);
     }
 
-    public void startGame(){
-           
+    public void startGame() {
+
         menu.add(pause);
         menu.add(resume);
         menuBar.add(menu);
@@ -59,26 +58,27 @@ public class MainMenu extends javax.swing.JFrame {
             public void actionPerformed(ActionEvent e) {
                 gameController.resume();
                 gameWorld.getCountDown().resumeTime();
-               Timer t = new Timer();
-               TimerTask task = new TimerTask() {
+                Timer t = new Timer();
+                TimerTask task = new TimerTask() {
                     @Override
                     public void run() {
-                       if(tasks==1){
-                        gameWorld.endGame();
-                       
-                       }
-                       else tasks--;
+                        if (tasks == 1) {
+                            gameWorld.endGame();
+
+                        } else {
+                            tasks--;
+                        }
 
                     }
                 };
-               System.out.println(gameWorld.getCountDown().getSeconds());
-               t.schedule(task, (gameWorld.getCountDown().secondsPaused())*1000 + (gameWorld.getCountDown().getSeconds()* 1000));
-               tasks++;
+                System.out.println(gameWorld.getCountDown().getSeconds());
+                t.schedule(task, (gameWorld.getCountDown().secondsPaused()) * 1000 + (gameWorld.getCountDown().getSeconds() * 1000));
+                tasks++;
             }
         });
-        
-  
+
     }
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always

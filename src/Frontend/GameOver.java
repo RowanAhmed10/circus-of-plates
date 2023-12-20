@@ -1,25 +1,11 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
- */
 package Frontend;
 
 import java.awt.Dimension;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 
-/**
- *
- * @author nourayman
- */
 public class GameOver extends javax.swing.JFrame {
 
-    /**
-     * Creates new form GameOver
-     */
-    private int score;
-    
-    
     public GameOver() {
         initComponents();
         JLabel label = new JLabel();
@@ -28,15 +14,12 @@ public class GameOver extends javax.swing.JFrame {
         label.setBounds(60, 0, size.width, size.height);
         this.add(label);
         this.setLocationRelativeTo(null);
-      
+
     }
 
     public void setScore(int score) {
-        this.score = score;
-        jLabel3.setText("SCORE: "+Integer.toString(score));
+        jLabel3.setText("SCORE: " + Integer.toString(score));
     }
-    
-    
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -103,7 +86,7 @@ public class GameOver extends javax.swing.JFrame {
     /**
      * @param args the command line arguments
      */
-   /* public static void main(String args[]) {
+    /* public static void main(String args[]) {
   
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {

@@ -1,14 +1,10 @@
 package CircusOfPlatesGame;
 
 import Shapes.ImageObject;
-import Shapes.Shape;
-import java.util.Timer;
-import java.util.TimerTask;
 
 public class StartClownState extends ClownState {
 
     private HardGameWorld hardGame;
-    ImageObject object = ClownObject.getClownInstance();
 
     public StartClownState(HardGameWorld hardGame) {
         this.hardGame = hardGame;
@@ -39,21 +35,19 @@ public class StartClownState extends ClownState {
 
     @Override
     public void ElectricShock() {
-    ClownObject.getClownInstance().SetImage("../Images/electricShock.png");
-    
-     for (int i = 0; i < hardGame.moveable.size(); i++) {
-           ImageObject obj = (ImageObject) hardGame.moveable.get(i);
-           obj.setVisible(false);
-     
-     }
-      for (int i = 1; i < hardGame.controllable.size(); i++) {
-           ImageObject obj = (ImageObject) hardGame.controllable.get(i);
-           obj.setVisible(false);
-          
-          
-     }
-      
+        ClownObject.getClownInstance().SetImage("../Images/electricShock.png");
+
+        for (int i = 0; i < hardGame.moveable.size(); i++) {
+            ImageObject obj = (ImageObject) hardGame.moveable.get(i);
+            obj.setVisible(false);
+
+        }
+        for (int i = 1; i < hardGame.controllable.size(); i++) {
+            ImageObject obj = (ImageObject) hardGame.controllable.get(i);
+            obj.setVisible(false);
+
+        }
+
     }
-    
 
 }

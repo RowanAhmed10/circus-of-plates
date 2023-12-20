@@ -6,14 +6,11 @@ import Shapes.SpecialShapeFactory;
 import Shapes.SpecialShapeName;
 import java.util.Collections;
 
-
 public class HardGameWorld extends GameWorld {
-
 
     public HardGameWorld(int width, int height) {
         super(width, height);
     }
-
 
     @Override
     public void setGame() {
@@ -30,6 +27,8 @@ public class HardGameWorld extends GameWorld {
             SpecialShape specialShape2 = (SpecialShape) new SpecialShapeFactory().SpecialShapeCreator(SpecialShapeName.ICE, (int) (Math.random() * (getWidth())), (int) (Math.random() * getHeight() / 2 * -1));
             moveable.add(specialShape2);
         }
+        SpecialShape specialShape3 = (SpecialShape) new SpecialShapeFactory().SpecialShapeCreator(SpecialShapeName.STAR, (int) (Math.random() * (getWidth())), (int) (Math.random() * getHeight() / 2 * -1));
+        moveable.add(specialShape3);
         Collections.shuffle(moveable);
         startState = new StartClownState(this);
         stopState = new StopClownState(this);

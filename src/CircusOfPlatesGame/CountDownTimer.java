@@ -1,24 +1,16 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package CircusOfPlatesGame;
 
 import java.util.Date;
 import java.util.Timer;
 import java.util.TimerTask;
 
-/**
- *
- * @author nourayman
- */
 public class CountDownTimer {
-    
-    private int secDelay=0;
-    private int seconds=60;
+
+    private int secDelay = 0;
+    private int seconds = 60;
     private Date startDate;
-    private Date endDate ;
-      
+    private Date endDate;
+
     public int getSecDelay() {
         return secDelay;
     }
@@ -26,42 +18,39 @@ public class CountDownTimer {
     public int getSeconds() {
         return seconds;
     }
-    
-    
-    
-    
-    public void secondsPassed() throws InterruptedException{
-        
-       Timer t = new Timer();
-       TimerTask task = new TimerTask(){
-           @Override
-           public void run() {
-        
-           seconds--;
-           
-           }
-           
-       };
-       t.scheduleAtFixedRate(task, 0, 1000);
-       
+
+    public void secondsPassed() throws InterruptedException {
+
+        Timer t = new Timer();
+        TimerTask task = new TimerTask() {
+            @Override
+            public void run() {
+
+                seconds--;
+
+            }
+
+        };
+        t.scheduleAtFixedRate(task, 0, 1000);
+
     }
-    
-    public void resumeTime(){
+
+    public void resumeTime() {
         endDate = new Date();
-        
+
     }
-    
-    public void pauseTime(){ 
-       startDate=new Date();
-      }
-    
-    public int secondsPaused(){
-        secDelay+= (int)((endDate.getTime() - startDate.getTime()) / 1000);
+
+    public void pauseTime() {
+        startDate = new Date();
+    }
+
+    public int secondsPaused() {
+        secDelay += (int) ((endDate.getTime() - startDate.getTime()) / 1000);
         System.out.print(secDelay);
         return secDelay;
     }
-    
- public int getTime(){
-     return seconds+secDelay;
- }
+
+    public int getTime() {
+        return seconds + secDelay;
+    }
 }

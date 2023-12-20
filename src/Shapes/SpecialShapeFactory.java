@@ -8,6 +8,8 @@ public class SpecialShapeFactory extends Factory {
                 return new Bomb(xPos, yPos, "../Images/bomb.png");
             case ICE:
                 return new Shock(xPos, yPos, "../Images/zzzz.png");
+            case STAR:
+                return new Star(xPos, yPos, "../Images/star.png");
             default:
                 return null;
         }
