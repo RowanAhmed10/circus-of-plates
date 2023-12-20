@@ -1,5 +1,8 @@
 package CircusOfPlatesGame;
 
+import Shapes.ImageObject;
+import Shapes.Lives;
+
 
 
 public class StopClownState extends ClownState {
@@ -35,5 +38,22 @@ public class StopClownState extends ClownState {
              
       
         }
+
+    @Override
+   public void ElectricShock() {
+    ClownObject.getClownInstance().SetImage("../Images/clown.png");
+    
+     for (int i = 0; i < hardGame.moveable.size(); i++) {
+           ImageObject obj = (ImageObject) hardGame.moveable.get(i);
+           obj.setVisible(true);
+          
+     }
+     
+      for (int i =0; i < hardGame.controllable.size(); i++) {
+           ImageObject obj = (ImageObject) hardGame.controllable.get(i);
+           obj.setVisible(true);
+         
+     }
+    }
     }
 

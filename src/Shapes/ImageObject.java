@@ -86,4 +86,12 @@ public class ImageObject implements GameObject {
     public BufferedImage[] getSpriteImages() {
         return spriteImages;
     }
+    public void SetImage(String path)
+    {
+     try {
+            spriteImages[0] = ImageIO.read(getClass().getResourceAsStream(path));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 }

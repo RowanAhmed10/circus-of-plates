@@ -3,6 +3,7 @@ package CircusOfPlatesGame;
 import Frontend.GameOver;
 import Frontend.MainMenu;
 import Shapes.*;
+import eg.edu.alexu.csd.oop.game.GameEngine;
 import eg.edu.alexu.csd.oop.game.GameObject;
 import eg.edu.alexu.csd.oop.game.World;
 import java.util.ArrayList;
@@ -11,6 +12,7 @@ import java.util.Timer;
 import java.util.TimerTask;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import eg.edu.alexu.csd.oop.game.GameEngine.GameController;
 
 public abstract class GameWorld implements World {
 
@@ -37,8 +39,7 @@ public abstract class GameWorld implements World {
     private MainMenu menu;
     private CountDownTimer countDown = new CountDownTimer();
     private boolean isFrozen=false;
-    
-    
+   
     private Timer timer = new Timer();
     private TimerTask endGame = new TimerTask() {
         @Override
@@ -121,7 +122,7 @@ public abstract class GameWorld implements World {
                 endGame();
             }
         }
-       else if(shape instanceof Bomb|| shape instanceof IceCube)
+       else if(shape instanceof Bomb|| shape instanceof Shock)
 {
     specialShapesChecker(shape);
    return;
@@ -141,7 +142,7 @@ public abstract class GameWorld implements World {
     public void specialShapesChecker(GameObject shape) {
         if (shape instanceof Bomb) {
             //add bomb actions "decrease lives"
-
+            
             SoundPlayer.playSound("bombsound.WAV");
            ((Bomb) shape).setVisible(false);
             moveable.remove(shape);
@@ -155,22 +156,29 @@ public abstract class GameWorld implements World {
             else{
                    endGame(); 
                }}
-        if (shape instanceof IceCube) {
-            //add ice cube actions
+        if (shape instanceof Shock) {
+            
+             SoundPlayer.playSound("electricShock.WAV");
               isFrozen = true;
-              startState.freeze();
+              startState.ElectricShock();
+            
               Timer t=new Timer(); 
               TimerTask task = new TimerTask(){
                   @Override
                   public void run() {
                       isFrozen=false;
-                     stopState.freeze();
+                     stopState.ElectricShock();
+                    
                      
                   }};
                       t.schedule(task,5000);
             
                   moveable.remove(shape);
           }
+        if(shape instanceof IceCube){
+            //incase 3malna el ice
+        }
+        
         
         
         if (shape instanceof Star) {
@@ -179,6 +187,13 @@ public abstract class GameWorld implements World {
             moveable.remove(shape);
         }
     }
+       private void StarAction(GameObject shape)
+       {
+       moveable.remove(shape);
+       SoundPlayer.playSound("starSound.WAV");
+       score=score*2; 
+      
+       }
 
     private boolean plateCaughtByRightHand(GameObject shape) // check if clown caught the object with his righthand
     {
@@ -249,11 +264,12 @@ public abstract class GameWorld implements World {
     @Override
     public boolean refresh() {
         
-
         for (GameObject obj : constants) {
             ((ImageObject) obj).setVisible(true);
         }
 
+  if (isFrozen==false)
+{
         for (GameObject obj : controllable) {
             ((ImageObject) obj).setVisible(true);
 
@@ -280,11 +296,14 @@ public abstract class GameWorld implements World {
 
             }
 
-        }gameOver.setScore(this.score);
-       
+        }
+      
+        gameOver.setScore(this.score);
+}
         return true;
-    }
+    
 
+    }
     public void addScore() {
         addScore(left);
         addScore(right);
@@ -316,8 +335,11 @@ public abstract class GameWorld implements World {
     @Override
     public String getStatus() {
         
-        
-        return "Score: " + score+"  Time: " + countDown.getTime()+"s";
+        int x=countDown.getTime();
+        if(x<=0){
+           x=0; 
+        }
+        return "Score: " + score+"  Time: " + x+"s";
         
     }
 

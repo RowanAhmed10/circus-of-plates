@@ -7,7 +7,7 @@ public class SpecialShapeFactory extends Factory {
             case BOMB:
                 return new Bomb(xPos, yPos, "../Images/bomb.png");
             case ICE:
-                return new IceCube(xPos, yPos, "../Images/ice.png");
+                return new Shock(xPos, yPos, "../Images/zzzz.png");
             default:
                 return null;
         }

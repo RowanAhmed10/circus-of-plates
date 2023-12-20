@@ -37,4 +37,23 @@ public class StartClownState extends ClownState {
 
     }
 
+    @Override
+    public void ElectricShock() {
+    ClownObject.getClownInstance().SetImage("../Images/electricShock.png");
+    
+     for (int i = 0; i < hardGame.moveable.size(); i++) {
+           ImageObject obj = (ImageObject) hardGame.moveable.get(i);
+           obj.setVisible(false);
+     
+     }
+      for (int i = 1; i < hardGame.controllable.size(); i++) {
+           ImageObject obj = (ImageObject) hardGame.controllable.get(i);
+           obj.setVisible(false);
+          
+          
+     }
+      
+    }
+    
+
 }

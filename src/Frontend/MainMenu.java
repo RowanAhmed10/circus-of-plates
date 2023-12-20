@@ -64,7 +64,9 @@ public class MainMenu extends javax.swing.JFrame {
                     @Override
                     public void run() {
                        if(tasks==1){
-                        gameWorld.endGame();}
+                        gameWorld.endGame();
+                       
+                       }
                        else tasks--;
 
                     }
