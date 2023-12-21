@@ -25,7 +25,7 @@ public abstract class GameWorld implements World {
     protected List<GameObject> constants = new ArrayList();
     protected List<GameObject> controllable = new ArrayList();
     protected List<GameObject> moveable = new ArrayList();
-    protected ImageObject background = new ImageObject(0, 0, "../Images/background.png");
+    protected ImageObject background = new ConstantsFactory().ConstantsCreator(ConstantsNames.BACKGROUND, 0, 0, this);
     protected StopClownState stopState;
     protected StartClownState startState;
     private final Shape rightBasePlate = new BasePlate(260, 330, "../Images/whiteplate.png", this, false);

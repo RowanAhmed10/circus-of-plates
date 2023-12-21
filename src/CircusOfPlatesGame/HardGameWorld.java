@@ -1,6 +1,7 @@
 package CircusOfPlatesGame;
 
-import Shapes.LivesFactory;
+import Shapes.ConstantsFactory;
+import Shapes.ConstantsNames;
 import Shapes.SpecialShape;
 import Shapes.SpecialShapeFactory;
 import Shapes.SpecialShapeName;
@@ -18,9 +19,9 @@ public class HardGameWorld extends GameWorld {
         createShapes();
         constants.add(background);
         controllable.add(ClownObject.getClownInstance());
-        constants.add(new LivesFactory().LivesCreator(5, 10));
-        constants.add(new LivesFactory().LivesCreator(45, 10));
-        constants.add(new LivesFactory().LivesCreator(85, 10));
+        constants.add(new ConstantsFactory().ConstantsCreator(ConstantsNames.LIVES,5, 10,this));
+         constants.add(new ConstantsFactory().ConstantsCreator(ConstantsNames.LIVES,45, 10,this));
+        constants.add(new ConstantsFactory().ConstantsCreator(ConstantsNames.LIVES,85, 10,this));
         for (int i = 0; i < 5; i++) {
             SpecialShape specialShape1 = (SpecialShape) new SpecialShapeFactory().SpecialShapeCreator(SpecialShapeName.BOMB, (int) (Math.random() * (getWidth())), (int) (Math.random() * getHeight() / 2 * -1));
             moveable.add(specialShape1);
