@@ -18,7 +18,7 @@ public abstract class GameWorld implements World {
     private final int scoreShift = 10;
     private final int width;
     private final int height;
-    private final int CONTROL_SPEED = 20;
+    private final int CONTROL_SPEED = 30;
     private final int SPEED = 10;
     private final int MAX_MOVING_OBJECTS = 5;
     private final ShapeColorCollection shapeNamesCollection;
@@ -154,6 +154,7 @@ public abstract class GameWorld implements World {
     public void endGame() {
         menu.pause.doClick();
         gameOver.setVisible(true);
+        SoundPlayer.stopSound("circusMusic.WAV");
     }
 
     public abstract void setGame();

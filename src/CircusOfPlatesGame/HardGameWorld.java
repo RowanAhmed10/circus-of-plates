@@ -15,17 +15,17 @@ public class HardGameWorld extends GameWorld {
 
     @Override
     public void setGame() {
-        SoundPlayer.playSound("circusMusic.WAV");
+        SoundPlayer.playSoundBackground("circusMusic.WAV");
         createShapes();
         constants.add(background);
         controllable.add(ClownObject.getClownInstance());
         constants.add(new ConstantsFactory().ConstantsCreator(ConstantsNames.LIVES,5, 10,this));
-         constants.add(new ConstantsFactory().ConstantsCreator(ConstantsNames.LIVES,45, 10,this));
+        constants.add(new ConstantsFactory().ConstantsCreator(ConstantsNames.LIVES,45, 10,this));
         constants.add(new ConstantsFactory().ConstantsCreator(ConstantsNames.LIVES,85, 10,this));
         for (int i = 0; i < 5; i++) {
             SpecialShape specialShape1 = (SpecialShape) new SpecialShapeFactory().SpecialShapeCreator(SpecialShapeName.BOMB, (int) (Math.random() * (getWidth())), (int) (Math.random() * getHeight() / 2 * -1));
             moveable.add(specialShape1);
-            SpecialShape specialShape2 = (SpecialShape) new SpecialShapeFactory().SpecialShapeCreator(SpecialShapeName.ICE, (int) (Math.random() * (getWidth())), (int) (Math.random() * getHeight() / 2 * -1));
+            SpecialShape specialShape2 = (SpecialShape) new SpecialShapeFactory().SpecialShapeCreator(SpecialShapeName.SHOCK, (int) (Math.random() * (getWidth())), (int) (Math.random() * getHeight() / 2 * -1));
             moveable.add(specialShape2);
         }
         SpecialShape specialShape3 = (SpecialShape) new SpecialShapeFactory().SpecialShapeCreator(SpecialShapeName.STAR, (int) (Math.random() * (getWidth())), (int) (Math.random() * getHeight() / 2 * -1));

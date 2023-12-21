@@ -15,10 +15,10 @@ public class MediumGameWorld extends GameWorld {
 
     @Override
     public void setGame() {
-        SoundPlayer.playSound("circusMusic.WAV");
+        SoundPlayer.playSoundBackground("circusMusic.WAV");
         createShapes();
         constants.add(background);
-     constants.add(new ConstantsFactory().ConstantsCreator(ConstantsNames.LIVES,5, 10,this));
+         constants.add(new ConstantsFactory().ConstantsCreator(ConstantsNames.LIVES,5, 10,this));
          constants.add(new ConstantsFactory().ConstantsCreator(ConstantsNames.LIVES,45, 10,this));
         constants.add(new ConstantsFactory().ConstantsCreator(ConstantsNames.LIVES,85, 10,this));
         controllable.add(ClownObject.getClownInstance());

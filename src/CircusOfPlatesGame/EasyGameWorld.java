@@ -12,7 +12,7 @@ public class EasyGameWorld extends GameWorld {
 
     @Override
     public void setGame() {
-        SoundPlayer.playSound("circusMusic.WAV");
+        SoundPlayer.playSoundBackground("circusMusic.WAV");
         createShapes();
         constants.add(background);
         controllable.add(ClownObject.getClownInstance());

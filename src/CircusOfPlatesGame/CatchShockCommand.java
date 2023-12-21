@@ -27,7 +27,7 @@ public class CatchShockCommand implements CatchCommand {
                 world.stopState.ElectricShock();
             }
         };
-        t.schedule(task, 5000);
+        t.schedule(task, 3000);
         world.moveable.remove(shock);
     }
 

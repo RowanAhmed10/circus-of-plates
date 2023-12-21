@@ -4,6 +4,7 @@ import CircusOfPlatesGame.EasyGameWorld;
 import CircusOfPlatesGame.GameWorld;
 import CircusOfPlatesGame.HardGameWorld;
 import CircusOfPlatesGame.MediumGameWorld;
+import CircusOfPlatesGame.SoundPlayer;
 import eg.edu.alexu.csd.oop.game.GameEngine;
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
@@ -50,6 +51,7 @@ public class MainMenu extends javax.swing.JFrame {
                 gameController.pause();
                 gameWorld.getCountDown().pauseTime();
                 gameWorld.getEndGame().cancel();
+                SoundPlayer.stopSound("circusMusic.WAV");
 
             }
         });
@@ -57,6 +59,7 @@ public class MainMenu extends javax.swing.JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 gameController.resume();
+                SoundPlayer.playSoundBackground("circusMusic.WAV");
                 gameWorld.getCountDown().resumeTime();
                 Timer t = new Timer();
                 TimerTask task = new TimerTask() {
@@ -180,8 +183,8 @@ public class MainMenu extends javax.swing.JFrame {
      */
     public static void main(String args[]) {
 
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
+       java.awt.EventQueue.invokeLater(new Runnable() {
+           public void run() {
                 new MainMenu().setVisible(true);
             }
         });
