@@ -12,36 +12,32 @@ public class ImageObject implements GameObject {
     private BufferedImage[] spriteImages = new BufferedImage[MAX_MSTATE];
     private int x;
     private int y;
-    private boolean isConrollable=false;
+    private boolean isControllable = false;
     private boolean visible;
+    private final String folder = "../Images/";
 
     public ImageObject(int posX, int posY, String path) {
-        this(posX, posY, path, 0);
-    }
-
-    public ImageObject(int posX, int posY, String path, int type) {
         this.x = posX;
         this.y = posY;
 
         this.visible = true;
         // create a bunch of buffered images and place into an array, to be displayed sequentially
         try {
-            spriteImages[0] = ImageIO.read(getClass().getResourceAsStream(path));
+            spriteImages[0] = ImageIO.read(getClass().getResourceAsStream(folder + path));
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
 
-    public boolean isConrollable() {
-        return isConrollable;
+    public boolean isControllable() {
+        return isControllable;
     }
 
-    public void setConrollable(boolean conrollable) {
-        isConrollable = conrollable;
+    public void setControllable(boolean conrollable) {
+        isControllable = conrollable;
     }
 
     public void setVisible(boolean visible) {
-
         this.visible = visible;
     }
 
@@ -62,7 +58,7 @@ public class ImageObject implements GameObject {
 
     @Override
     public void setY(int y) {
-        if(!isConrollable) {
+        if (!isControllable) {
             this.y = y;
         }
     }
@@ -86,10 +82,10 @@ public class ImageObject implements GameObject {
     public BufferedImage[] getSpriteImages() {
         return spriteImages;
     }
-    public void SetImage(String path)
-    {
-     try {
-            spriteImages[0] = ImageIO.read(getClass().getResourceAsStream(path));
+
+    public void setImage(String path) {
+        try {
+            spriteImages[0] = ImageIO.read(getClass().getResourceAsStream(folder + path));
         } catch (IOException e) {
             e.printStackTrace();
         }

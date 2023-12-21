@@ -18,7 +18,7 @@ public class GameOver extends javax.swing.JFrame {
     }
 
     public void setScore(int score) {
-        jLabel3.setText("   SCORE: " + Integer.toString(score)+"   ");
+        jLabel3.setText("   SCORE: " + Integer.toString(score) + "   ");
     }
 
     /**

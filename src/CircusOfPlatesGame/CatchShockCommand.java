@@ -16,14 +16,14 @@ public class CatchShockCommand implements CatchCommand {
 
     public void execute() {
         SoundPlayer.playSound("electricShock.WAV");
-        world.setIsFrozen(true);
+        world.setIsShocked(true);
         world.startState.ElectricShock();
 
         Timer t = new Timer();
         TimerTask task = new TimerTask() {
             @Override
             public void run() {
-                world.setIsFrozen(false);
+                world.setIsShocked(false);
                 world.stopState.ElectricShock();
             }
         };

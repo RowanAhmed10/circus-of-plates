@@ -25,6 +25,7 @@ public class MainMenu extends javax.swing.JFrame {
     JMenuItem resume = new JMenuItem("resume");
     public JMenuItem pause = new JMenuItem("pause");
     private int tasks = 0;
+    private boolean isPaused = false;
 
     public MainMenu() {
 
@@ -49,6 +50,7 @@ public class MainMenu extends javax.swing.JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 gameController.pause();
+                isPaused = true;
                 gameWorld.getCountDown().pauseTime();
                 gameWorld.getEndGame().cancel();
                 SoundPlayer.stopSound("circusMusic.WAV");
@@ -58,6 +60,9 @@ public class MainMenu extends javax.swing.JFrame {
         resume.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                if (!isPaused) {
+                    return;
+                }
                 gameController.resume();
                 SoundPlayer.playSoundBackground("circusMusic.WAV");
                 gameWorld.getCountDown().resumeTime();
@@ -74,9 +79,9 @@ public class MainMenu extends javax.swing.JFrame {
 
                     }
                 };
-                System.out.println(gameWorld.getCountDown().getSeconds());
                 t.schedule(task, (gameWorld.getCountDown().secondsPaused()) * 1000 + (gameWorld.getCountDown().getSeconds() * 1000));
                 tasks++;
+                isPaused = false;
             }
         });
 
@@ -183,8 +188,8 @@ public class MainMenu extends javax.swing.JFrame {
      */
     public static void main(String args[]) {
 
-       java.awt.EventQueue.invokeLater(new Runnable() {
-           public void run() {
+        java.awt.EventQueue.invokeLater(new Runnable() {
+            public void run() {
                 new MainMenu().setVisible(true);
             }
         });

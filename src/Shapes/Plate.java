@@ -15,14 +15,10 @@ public class Plate extends Shape {
     @Override
     public void setX(int x) {
         ClownObject clown = ClownObject.getClownInstance();
-//        System.out.println(clown.getX());
-
         if (world.isInLeftStack(this)) {
             super.setX(clown.getX() - 30);
         } else if (world.isInRightStack(this)) {
             super.setX(clown.getX() + 150);
-
         }
-
     }
 }

@@ -28,12 +28,12 @@ public abstract class GameWorld implements World {
     protected ImageObject background = new ConstantsFactory().ConstantsCreator(ConstantsNames.BACKGROUND, 0, 0, this);
     protected StopClownState stopState;
     protected StartClownState startState;
-    private final Shape rightBasePlate = new BasePlate(260, 330, "../Images/whiteplate.png", this, false);
-    private final Shape leftBasePlate = new BasePlate(440, 330, "../Images/whiteplate.png", this, true);
+    private final Shape rightBasePlate = new BasePlate(260, 330, "whiteplate.png", this, false);
+    private final Shape leftBasePlate = new BasePlate(440, 330, "whiteplate.png", this, true);
     private GameOver gameOver = new GameOver();
     private MainMenu menu;
     private CountDownTimer countDown = new CountDownTimer();
-    private boolean isFrozen = false;
+    private boolean isShocked = false;
 
     private Timer timer = new Timer();
     private TimerTask endGame = new TimerTask() {
@@ -68,75 +68,44 @@ public abstract class GameWorld implements World {
                 && (Math.abs((object1.getY() + object1.getHeight() / 2) - (object2.getY() + object2.getHeight() / 2)) <= object1.getHeight());
     }
 
-    private boolean plateCaughtByLeftHand(GameObject shape) // check if clown caught the object with his lefthand
-    {
+    private boolean catchShapeByLeftHand(GameObject shape) {
         return areTwoObjectsIntersected(left.get(left.size() - 1), shape);
     }
 
-    private boolean plateCaughtByRightHand(GameObject shape) // check if clown caught the object with his righthand
-    {
+    private boolean catchShapeByRightHand(GameObject shape) {
         return areTwoObjectsIntersected(right.get(right.size() - 1), shape);
     }
 
     private void updateHand(List<Shape> list, GameObject shape) {
-        GameObject top = list.get(list.size() - 1);
-
-        if (shape instanceof Plate) {
-            list.add((Shape) shape);
-            plateIndexUpdate(top, (ImageObject) shape);
-            if (shape.getY() == 0) {
-                endGame();
-            }
-        } else if (shape instanceof Ball) {
-            list.add((Shape) shape);
-            ballIndexUpdate(top, (ImageObject) shape);
-            if (shape.getY() == 0) {
-                endGame();
-            }
-        } else if (shape instanceof SpecialShape) {
-            specialShapesChecker(shape);
-            return;
-        }
-        if (isFrozen == true) {
-            if (plateCaughtByRightHand(shape)) {
-                right.add((Shape) shape);
-            }
-            constants.add(shape);
-
-        } else {
-            controllable.add(shape);
-        }
-        moveable.remove(shape);
-    }
-
-    public void specialShapesChecker(GameObject shape) {
         CatchCommand command = null;
-        if (shape instanceof Bomb) {
+        if (shape instanceof Plate) {
+            command = new CatchPlateCommand(this, (Plate) shape, list);
+        } else if (shape instanceof Ball) {
+            command = new CatchBallCommand(this, (Ball) shape, list);
+        } else if (shape instanceof Bomb) {
             command = new CatchBombCommand(this, (Bomb) shape);
         } else if (shape instanceof Shock) {
             command = new CatchShockCommand(this, (Shock) shape);
-        } else if (shape instanceof IceCube) {
-            //incase 3malna el ice
         } else {
             command = new CatchStarCommand(this, (Star) shape);
         }
         command.execute();
     }
 
-    private void plateIndexUpdate(GameObject topObject, ImageObject shape) {
+    public void updatePlateIndex(GameObject topObject, ImageObject shape) {
         int X = topObject instanceof Plate || topObject instanceof BasePlate ? topObject.getX() : topObject.getX() - 25;
         int Y = topObject instanceof Plate || topObject instanceof BasePlate ? topObject.getY() - shape.getHeight() + 25 : topObject.getY() - shape.getHeight() + 10;
         shape.setX(X);
         shape.setY(Y);
-        shape.setConrollable(true);
+        shape.setControllable(true);
     }
 
-    private void ballIndexUpdate(GameObject topObject, ImageObject shape) {
+    public void updateBallIndex(GameObject topObject, ImageObject shape) {
         int X = topObject instanceof Plate || topObject instanceof BasePlate ? topObject.getX() + 25 : topObject.getX();
         int Y = topObject instanceof Plate || topObject instanceof BasePlate ? topObject.getY() - shape.getHeight() + 20 : topObject.getY() - shape.getHeight();
         shape.setX(X);
         shape.setY(Y);
-        shape.setConrollable(true);
+        shape.setControllable(true);
     }
 
     protected void createShapes() {
@@ -166,7 +135,7 @@ public abstract class GameWorld implements World {
             ((ImageObject) obj).setVisible(true);
         }
 
-        if (isFrozen == false) {
+        if (isShocked == false) {
             for (GameObject obj : controllable) {
                 ((ImageObject) obj).setVisible(true);
             }
@@ -177,12 +146,12 @@ public abstract class GameWorld implements World {
                 if (obj.getY() == getHeight()) {
                     returnToTop(obj);
                 }
-                if (plateCaughtByLeftHand(obj)) {
+                if (catchShapeByLeftHand(obj)) {
                     updateHand(left, obj);
                     addScore();
                 }
-                if (plateCaughtByRightHand(obj)) {
-                    updateHand(right, (obj));
+                if (catchShapeByRightHand(obj)) {
+                    updateHand(right, obj);
                     addScore();
                 }
             }
@@ -220,7 +189,6 @@ public abstract class GameWorld implements World {
 
     @Override
     public String getStatus() {
-
         int x = countDown.getTime();
         if (x <= 0) {
             x = 0;
@@ -318,8 +286,8 @@ public abstract class GameWorld implements World {
         this.score = score;
     }
 
-    public void setIsFrozen(boolean isFrozen) {
-        this.isFrozen = isFrozen;
+    public void setIsShocked(boolean isShocked) {
+        this.isShocked = isShocked;
     }
 
 }

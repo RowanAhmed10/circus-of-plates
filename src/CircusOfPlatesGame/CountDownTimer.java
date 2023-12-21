@@ -46,7 +46,6 @@ public class CountDownTimer {
 
     public int secondsPaused() {
         secDelay += (int) ((endDate.getTime() - startDate.getTime()) / 1000);
-        System.out.print(secDelay);
         return secDelay;
     }
 
