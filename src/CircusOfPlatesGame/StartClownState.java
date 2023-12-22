@@ -19,21 +19,6 @@ public class StartClownState extends ClownState {
     }
 
     @Override
-    public void freeze() {
-        hardGame.constants.add(ClownObject.getClownInstance());
-        hardGame.controllable.remove(ClownObject.getClownInstance());
-        hardGame.constants.add(hardGame.getLeftBasePlate());
-        hardGame.controllable.remove(hardGame.getLeftBasePlate());
-        hardGame.constants.add(hardGame.getRightBasePlate());
-        hardGame.controllable.remove(hardGame.getRightBasePlate());
-        hardGame.constants.addAll(hardGame.right);
-        hardGame.constants.addAll(hardGame.left);
-        hardGame.controllable.removeAll(hardGame.right);
-        hardGame.controllable.removeAll(hardGame.left);
-
-    }
-
-    @Override
     public void ElectricShock() {
         ClownObject.getClownInstance().setImage("electricShock.png");
 

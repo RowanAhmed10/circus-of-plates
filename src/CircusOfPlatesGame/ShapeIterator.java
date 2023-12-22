@@ -5,13 +5,12 @@ import eg.edu.alexu.csd.oop.game.GameObject;
 public class ShapeIterator implements Iterator {
 
     private int i;
-    private ShapeColorCollection shapeColor ;
+    private ShapeColorCollection shapeColor;
+
     public ShapeIterator(ShapeColorCollection shapeColor) {
         this.shapeColor = shapeColor;
         this.i = 0;
     }
-
-
 
     @Override
     public boolean hasNext() {

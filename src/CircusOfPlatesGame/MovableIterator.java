@@ -3,18 +3,18 @@ package CircusOfPlatesGame;
 import eg.edu.alexu.csd.oop.game.GameObject;
 
 public class MovableIterator implements Iterator {
+
     private MoveableCollection moveableCollection;
     private int i;
+
     public MovableIterator(MoveableCollection moveableCollection) {
-        this.moveableCollection=moveableCollection;
-        this.i=0;
+        this.moveableCollection = moveableCollection;
+        this.i = 0;
     }
-
-
 
     @Override
     public boolean hasNext() {
-        return i<moveableCollection.getMoveable().size();
+        return i < moveableCollection.getMoveable().size();
     }
 
     @Override

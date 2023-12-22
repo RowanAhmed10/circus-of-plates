@@ -45,7 +45,7 @@ public abstract class GameWorld implements World {
 
     List<Shape> right = new ArrayList();
     List<Shape> left = new ArrayList();
-    MoveableCollection moveableCollection=new MoveableCollection(moveable);
+    MoveableCollection moveableCollection = new MoveableCollection(moveable);
 
     public GameWorld(int width, int height) {
         this.shapeNamesCollection = new ShapeColorCollection();
@@ -114,17 +114,23 @@ public abstract class GameWorld implements World {
         for (int i = 0; i < MAX_MOVING_OBJECTS; i++) {
             for (Iterator iter = shapeNamesCollection.getIterator(); iter.hasNext();) {
                 Color shapeColor = (Color) iter.next();
-                Shape shape1 = (Shape) new NormalShapeFactory().ShapeCreator(ShapeName.PLATE, shapeColor, (int) ((Math.random()) * (getWidth())), (int) ((Math.random()) * getHeight() / 2 * -1), this);
-                Shape shape2 = (Shape) new NormalShapeFactory().ShapeCreator(ShapeName.BALL, shapeColor, (int) ((Math.random()) * (getWidth())), (int) ((Math.random()) * getHeight() / 2* -1), this);
-                   resolveIntersection(shape1);
-                   moveableCollection.getIterator().add(shape1);
-                   resolveIntersection(shape2);
-                   moveableCollection.getIterator().add(shape2);
-
+                Shape shape1 = (Shape) new NormalShapeFactory().ShapeCreator(ShapeName.PLATE, shapeColor, getRandomX(), getRandomY(), this);
+                Shape shape2 = (Shape) new NormalShapeFactory().ShapeCreator(ShapeName.BALL, shapeColor, getRandomX(), getRandomY(), this);
+//                resolveIntersection(shape1);
+                moveableCollection.getIterator().add(shape1);
+//                resolveIntersection(shape2);
+                moveableCollection.getIterator().add(shape2);
             }
         }
+    }
 
+    protected int getRandomX() {
+        int margin = 30;
+        return (int) ((Math.random()) * (getWidth() - 2 * margin)) + margin;
+    }
 
+    protected int getRandomY() {
+        return (int) ((Math.random()) * getHeight() * -1);
     }
 
     public void endGame() {
@@ -133,27 +139,25 @@ public abstract class GameWorld implements World {
         SoundPlayer.stopSound("circusMusic.WAV");
     }
 
-
-    public void alterPosition(GameObject shape){
-//int counter=0;
-        while(isIntersectingWithMovable(shape)) {
-            shape.setX((int) (Math.random() * getWidth()));
-            shape.setY((int) (Math.random() * getHeight() / 2 * -1));
-        }
-//            counter++;
-//            if(counter>1000)
-//                shape.setX((int) (Math.random() * getWidth()));
+//    public void alterPosition(GameObject shape) {
+////int counter=0;
+//        while (isIntersectingWithMovable(shape)) {
+//            shape.setX((int) (Math.random() * getWidth()));
 //            shape.setY((int) (Math.random() * getHeight() / 2 * -1));
-//                break;
 //        }
-
-    }
-public void resolveIntersection(GameObject obj){
-    if (isIntersectingWithMovable(obj)) {
-        System.out.println("Intersected with a moving object");
-        alterPosition(obj);
-    }
-}
+////            counter++;
+////            if(counter>1000)
+////                shape.setX((int) (Math.random() * getWidth()));
+////            shape.setY((int) (Math.random() * getHeight() / 2 * -1));
+////                break;
+////        }
+//    }
+//    public void resolveIntersection(GameObject obj) {
+//        if (isIntersectingWithMovable(obj)) {
+//            System.out.println("Intersected with a moving object");
+//            alterPosition(obj);
+//        }
+//    }
     public abstract void setGame();
 
     @Override
@@ -205,16 +209,14 @@ public void resolveIntersection(GameObject obj){
         }
     }
 
-    public boolean isIntersectingWithMovable(GameObject shape){
-        for(Iterator iter = moveableCollection.getIterator(); iter.hasNext();){
-            if(areTwoObjectsIntersected(shape,(GameObject) iter.next())) {
-                return true;
-            }
-
-        }
-        return false;
-    }
-
+//    public boolean isIntersectingWithMovable(GameObject shape) {
+//        for (Iterator iter = moveableCollection.getIterator(); iter.hasNext();) {
+//            if (areTwoObjectsIntersected(shape, (GameObject) iter.next())) {
+//                return true;
+//            }
+//        }
+//        return false;
+//    }
     protected boolean canAddScore(List<Shape> list) {
         if (list.size() < 3) {
             return false;
@@ -236,11 +238,10 @@ public void resolveIntersection(GameObject obj){
 
     public void returnToTop(GameObject obj) {
         moveable.remove(obj);
-        obj.setY(-1*(int) (Math.random() * getHeight()) /8);
-        obj.setX((int) (Math.random() * getWidth()));
-        resolveIntersection(obj);
+        obj.setY(-1 * (int) (Math.random() * getHeight()) / 8);
+        obj.setX(getRandomX());
+//        resolveIntersection(obj);
         moveable.add(obj);
-
     }
 
     public boolean isInLeftStack(Shape shape) {
