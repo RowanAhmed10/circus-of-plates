@@ -1,6 +1,6 @@
 package CircusOfPlatesGame;
 
-public interface ImageContainer {
+public interface Container {
 
     Iterator getIterator();
 }

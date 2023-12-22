@@ -17,6 +17,7 @@ public class EasyGameWorld extends GameWorld {
         constants.add(background);
         controllable.add(ClownObject.getClownInstance());
         SpecialShape star = (SpecialShape) new SpecialShapeFactory().SpecialShapeCreator(SpecialShapeName.STAR, (int) (Math.random() * (getWidth())), (int) (Math.random() * getHeight() / 2 * -1));
+        resolveIntersection(star);
         moveable.add(star);
     }
 }

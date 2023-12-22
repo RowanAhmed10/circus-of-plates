@@ -1,15 +1,17 @@
 package CircusOfPlatesGame;
 
+import eg.edu.alexu.csd.oop.game.GameObject;
+
 public class ShapeIterator implements Iterator {
 
     private int i;
-
+    private ShapeColorCollection shapeColor ;
     public ShapeIterator(ShapeColorCollection shapeColor) {
         this.shapeColor = shapeColor;
         this.i = 0;
     }
 
-    private ShapeColorCollection shapeColor = new ShapeColorCollection();
+
 
     @Override
     public boolean hasNext() {
@@ -22,5 +24,15 @@ public class ShapeIterator implements Iterator {
             return shapeColor.getShapeNames().get(i++);
         }
         return null;
+    }
+
+    @Override
+    public void add(GameObject obj) {
+
+    }
+
+    @Override
+    public void remove(GameObject obj) {
+
     }
 }

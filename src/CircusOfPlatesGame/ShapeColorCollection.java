@@ -4,7 +4,7 @@ import Shapes.Color;
 
 import java.util.ArrayList;
 
-public class ShapeColorCollection implements ImageContainer {
+public class ShapeColorCollection implements Container {
 
     private ArrayList<Color> shapeColor = new ArrayList<>();
     private int i;
