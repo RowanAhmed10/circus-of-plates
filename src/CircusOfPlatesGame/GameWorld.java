@@ -125,12 +125,12 @@ public abstract class GameWorld implements World {
     }
 
     protected int getRandomX() {
-        int margin = 30;
-        return (int) ((Math.random()) * (getWidth() - 2 * margin)) + margin;
+        int margin = 55;
+        return (int) (Math.random() * (getWidth() - 2 * margin)) + margin;
     }
 
     protected int getRandomY() {
-        return (int) ((Math.random()) * getHeight() * -1);
+        return (int) ((Math.random()) * getHeight() * -2);
     }
 
     public void endGame() {
